@@ -33,6 +33,7 @@ test_script:
       Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
       $PSSAResults = Invoke-ScriptAnalyzer -Path $pwd -Recurse -Severity Error -ErrorAction SilentlyContinue
       If ($PSSAResults) {
+        write-host "Entering the block when PsScriptAnalyzer has results"
         $PSSAResultString = $PSSAResults | Out-String
         Write-Warning $PSSAResultString
         Add-AppveyorMessage -Message "PSScriptAnalyzer output contained one or more result(s) with 'Error' severity.`

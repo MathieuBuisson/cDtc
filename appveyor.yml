@@ -1,5 +1,3 @@
-$ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
-
 version: 1.0.{build}
 
 os: WMF 5
@@ -18,7 +16,7 @@ build: false
 test_script:
   - ps: |
       Add-AppveyorTest -Name "Pester" -Outcome Running
-      $PesterResults = Invoke-Pester -Path "$($ProjectRoot)\Tests" -PassThru
+      $PesterResults = Invoke-Pester -Path ".\Tests" -PassThru
       $FailedCount = $PesterResults.FailedCount
       If ($FailedCount -gt 0) {
         Add-AppveyorMessage -Message "$FailedCount.ToString() Pester tests failed.`

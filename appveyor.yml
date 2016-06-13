@@ -29,25 +29,3 @@ test_script:
       Else {
         Update-AppveyorTest -Name "Pester" -Outcome Passed
       }
-  - ps: |
-      Copy-Item -Path $pwd -Destination 'C:\Program Files\WindowsPowerShell\Modules' -Recurse -Force -Confirm:$False
-      Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
-      Write-Host "Just before invoking PSScriptAnalyzer"
-      #$PSSAResults = 
-      Invoke-ScriptAnalyzer -Path $pwd -Recurse -Severity Error
-      <#
-      If ($PSSAResults) {
-        write-host "Entering the block when PsScriptAnalyzer has results"
-        $PSSAResultString = $PSSAResults | Out-String
-        Write-Warning $PSSAResultString
-        Add-AppveyorMessage -Message "PSScriptAnalyzer output contained one or more result(s) with 'Error' severity.`
-        Check the 'Tests' tab of this build for more details." -Category Error
-        Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Failed -ErrorMessage $PSSAResultString
-        
-        # Failing the build
-        Throw "Build failed because the PsScriptAnalyzer tests failed"
-      }
-      Else {
-        Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Passed
-      }
-      #>

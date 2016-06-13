@@ -29,8 +29,8 @@ test_script:
       Else {
         Update-AppveyorTest -Name "Pester" -Outcome Passed
       }
-      Write-Host "Finished Pester tests"
   - ps: |
+      Copy-Item -Path $pwd -Destination 'C:\Program Files\WindowsPowerShell\Modules' -Recurse -Force -Confirm:$False
       Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
       Write-Host "Just before invoking PSScriptAnalyzer"
       #$PSSAResults = 

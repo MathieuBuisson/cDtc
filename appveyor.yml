@@ -16,6 +16,7 @@ build: false
 test_script:
   - ps: |
       Add-AppveyorTest -Name "Pester" -Outcome Running
+      Write-Host "Just before invoking Pester"
       $PesterResults = Invoke-Pester -Path ".\Tests" -PassThru
       $FailedCount = $PesterResults.FailedCount
       If ($FailedCount -gt 0) {
@@ -27,10 +28,13 @@ test_script:
         Throw "Build failed because the Pester tests failed"
       }
       Else {
+        Write-Host "Entering the case when the Pester test passed"
         Update-AppveyorTest -Name "Pester" -Outcome Passed
       }
+      Write-Host "Finished Pester tests"
   - ps: |
       Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
+      Write-Host "Just before invoking PSScriptAnalyzer"
       $PSSAResults = Invoke-ScriptAnalyzer -Path $pwd -Recurse -Severity Error -ErrorAction SilentlyContinue
       If ($PSSAResults) {
         write-host "Entering the block when PsScriptAnalyzer has results"
